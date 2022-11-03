@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 enum EnumType {
-  addition = 0,
-  subtraction = 1,
-  multiplication = 2,
+  addition = "addition",
+  subtraction = "subtraction",
+  multiplication = "multiplication",
 }
 
 export default function handler(
@@ -29,7 +29,7 @@ export default function handler(
     console.log("result2", calculateResult(10, 20));
     res.status(200).json({
       slackUsername: "PraiseObende",
-      operation_type: EnumType.multiplication,
+      operation_type: req.body.operation_type,
       result: calculateResult(req.body.x, req.body.y),
     });
   }
