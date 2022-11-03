@@ -15,7 +15,7 @@ export default function handler(
   }>
 ) {
   if (req.method == "POST") {
-    res.status(201).json({
+    res.status(200).json({
       slackUsername: "PraiseObende",
       operation_type: req.body.operation_type,
       result:
