@@ -27,9 +27,9 @@ export default function handler(
   if (req.method == "POST") {
     res.status(200).json({
       slackUsername: "PraiseObende",
+      result: calculateResult(req.body.x, req.body.y),
       operation_type:
         EnumType.addition || EnumType.subtraction || EnumType.multiplication,
-      result: calculateResult(req.body.x, req.body.y),
     });
   }
 }
