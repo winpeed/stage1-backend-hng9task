@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 enum EnumType {
-  addition = "addition",
-  subtraction = "subtraction",
-  multiplication = "multiplication",
+  addition,
+  subtraction,
+  multiplication,
 }
 
 export default function handler(
@@ -15,21 +15,20 @@ export default function handler(
   }>
 ) {
   const calculateResult = (x: number, y: number) => {
-    return req.body.operation_type == EnumType.addition
+    return req.body.operation_type === EnumType[0]
       ? x + y
-      : req.body.operation_type == EnumType.subtraction
+      : req.body.operation_type === EnumType[1]
       ? x - y
-      : req.body.operation_type == EnumType.multiplication
+      : req.body.operation_type === EnumType[2]
       ? x * y
       : 0;
   };
 
   if (req.method == "POST") {
-    console.log("result", calculateResult(req.body.x, req.body.y));
-    console.log("result2", calculateResult(10, 20));
     res.status(200).json({
       slackUsername: "PraiseObende",
-      operation_type: req.body.operation_type,
+      operation_type:
+        EnumType.addition || EnumType.subtraction || EnumType.multiplication,
       result: calculateResult(req.body.x, req.body.y),
     });
   }
