@@ -14,18 +14,23 @@ export default function handler(
     result: number;
   }>
 ) {
+  const calculateResult = (x: number, y: number) => {
+    return req.body.operation_type == EnumType[0]
+      ? x + y
+      : req.body.operation_type == EnumType[1]
+      ? x - y
+      : req.body.operation_type == EnumType[2]
+      ? x * y
+      : 0;
+  };
+
   if (req.method == "POST") {
+    console.log("result", calculateResult(req.body.x, req.body.y));
+    console.log("result2", calculateResult(10, 20));
     res.status(200).json({
       slackUsername: "PraiseObende",
-      operation_type: req.body.operation_type,
-      result:
-        req.body.operation_type == EnumType[0]
-          ? req.body.x + req.body.y
-          : req.body.operation_type == EnumType[1]
-          ? req.body.x - req.body.y
-          : req.body.operation_type == EnumType[2]
-          ? req.body.x * req.body.y
-          : 0,
+      operation_type: EnumType[0] || EnumType[1] || EnumType[2],
+      result: calculateResult(req.body.x, req.body.y),
     });
   }
 }
