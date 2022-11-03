@@ -10,26 +10,27 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<{
     slackUsername: string;
-    operation_type: EnumType;
+    operation_type?: EnumType;
     result: number;
   }>
 ) {
-  const calculateResult = (x: number, y: number) => {
-    return req.body.operation_type === EnumType[0]
-      ? x + y
-      : req.body.operation_type === EnumType[1]
-      ? x - y
-      : req.body.operation_type === EnumType[2]
-      ? x * y
-      : 0;
-  };
-
   if (req.method == "POST") {
+    const calculateResult = (x: number, y: number) => {
+      return req.body.operation_type === EnumType[0]
+        ? x + y
+        : req.body.operation_type === EnumType[1]
+        ? x - y
+        : req.body.operation_type === EnumType[2]
+        ? x * y
+        : 0;
+    };
+
+    const finalResult = calculateResult(req.body.x, req.body.y);
     res.status(200).json({
       slackUsername: "PraiseObende",
-      result: calculateResult(req.body.x, req.body.y),
       operation_type:
         EnumType.addition || EnumType.subtraction || EnumType.multiplication,
+      result: finalResult,
     });
   }
 }
