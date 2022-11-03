@@ -16,11 +16,11 @@ export default function handler(
 ) {
   if (req.method == "POST") {
     const calculateResult = (x: number, y: number) => {
-      return req.body.operation_type === EnumType[0]
+      return req.body.operation_type.includes(EnumType[0])
         ? x + y
-        : req.body.operation_type === EnumType[1]
+        : req.body.operation_type.includes(EnumType[1])
         ? x - y
-        : req.body.operation_type === EnumType[2]
+        : req.body.operation_type.includes(EnumType[2])
         ? x * y
         : 0;
     };
